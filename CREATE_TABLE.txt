@@ -1,0 +1,47 @@
+CREATE TABLE Patient(
+    UR_number INT IDENTITY PRIMARY KEY,
+    Name VARCHAR(50),
+    Age int ,
+    Address VARCHAR(80),
+    Email VARCHAR(60),
+    Phone VARCHAR(20),
+    Medicare_card_number int,
+)
+CREATE TABLE Doctor(
+    Doctor_ID int IDENTITY PRIMARY KEY,
+    Name VARCHAR(50),
+    specialty VARCHAR(50),
+    Email VARCHAR(60),
+    Phone VARCHAR(20),
+    experience_years int,
+    UR_number INT
+    FOREIGN KEY (UR_number) REFERENCES Patient (UR_number),
+)
+CREATE TABLE pharmaceutcal_Company(
+    Company_ID INT IDENTITY PRIMARY KEY,
+    Trade_Name VARCHAR(50),
+    Address VARCHAR(80),
+    Phone VARCHAR(20),
+
+)
+
+CREATE TABLE drug(
+    Drug_ID INT  IDENTITY PRIMARY KEY,
+    Trade_Name VARCHAR(60),
+    Drug_Strength VARCHAR(40),
+    Company_ID INT,
+    FOREIGN KEY (Company_ID) REFERENCES pharmaceutcal_Company (Company_ID)
+    ON DELETE CASCADE
+
+)
+CREATE TABLE Prescription(
+    prescription_ID INT IDENTITY PRIMARY KEY,
+    date DATE ,
+    quantity int,
+    Doctor_ID int,
+    Drug_ID INT,
+    UR_number INT
+    FOREIGN KEY (UR_number) REFERENCES Patient (UR_number),
+    FOREIGN KEY (Doctor_ID) REFERENCES Doctor (Doctor_ID),
+    FOREIGN KEY (Drug_ID) REFERENCES drug (Drug_ID) ,
+)
